@@ -2,6 +2,16 @@ name: clase-triggers
 run-name: Clase sobre Triggers
 on:
     workflow_dispatch:
+        inputs:
+            edad:
+                description: 'Edad'
+                required: true
+                type: number
+            nombre:
+                description: 'Nombre'
+                required: true
+                default: 'Juan'
+                type: string
     push:
         branches:
             - 'main'
@@ -15,4 +25,16 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: run main.py
-              run: python main.py
+              run: python triggers.py
+    mayor:
+        if: ${{ inputs.edad >= 18 }} 
+        runs-on: ubuntu-latest
+        steps:
+        - name: Correr script
+          run: echo ${{ inputs.nombre }} es mayor de edad
+    menor:
+        if: ${{ inputs.edad < 18 }} 
+        runs-on: ubuntu-latest
+        steps:
+        - name: Correr script
+          run: echo ${{ inputs.nombre }} es menor de edad
