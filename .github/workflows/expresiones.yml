@@ -1,0 +1,28 @@
+name: trying-out-some-expressions
+run-name: Reto 3, expresiones
+on:
+    workflow_dispatch:
+        inputs:
+            numero:
+                type: number
+                default: 0
+                description: "Escriba el num para fizzbuzz"
+jobs:
+    condicion-mayor-0:
+        if: ${{ inputs.numero >= 0 }}
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: run FizzBuzz
+              id: fizzbuzz
+              env:
+               N: ${{ inputs.numero }}
+              run: python fizzbuzz.py
+    mensaje-exito:
+        if: ${{ inputs.numero < 0 }}
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: failed exec
+              run: python fallo.py
+            
