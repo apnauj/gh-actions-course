@@ -1,0 +1,1 @@
+print("Ejecucion fallida, el numero era menor que 0")
