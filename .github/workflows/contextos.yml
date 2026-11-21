@@ -1,0 +1,36 @@
+name: ejercicio-contextos
+run-name: Reto 4 contextos
+
+on:
+  workflow_dispatch:
+
+jobs:
+  imprimir-mensajes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Imprimir el workspace (path)
+        run: echo "El directorio de trabajo (workspace) es ${{ github.workspace }}"
+        
+      - name: Imprimir el nombre del evento
+        run: echo "El evento que disparó el workflow es ${{ github.event_name }}"
+
+      - name: Imprimir status inicial del job
+        run: echo "El estado actual del job es ${{ job.status }}"
+
+      - name: Generate 0 or 1
+        id: generate_number
+        run: echo "random_number=$((RANDOM % 2))" >> "$GITHUB_OUTPUT"
+
+      - name: Pass or fail
+        run: |
+          if [[ "${{ steps.generate_number.outputs.random_number }}" == "0" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
+
+      - name: Sistema operativo y estado final
+        if: always()
+        run: |
+          echo "Todo esto corrió en ${{ runner.os }}"
+          echo "El estado final del job tras el paso aleatorio es ${{ job.status }}"
