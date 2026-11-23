@@ -1,0 +1,20 @@
+name: variables-en-gh-actions
+run-name: Aprendiendo variables en gh actions
+on:
+    workflow_dispatch:
+        inputs:
+            numero:
+                description: 'Numero'
+                required: true
+                type: number
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+         - name: guardar numero en variable
+           env:
+             N: ${{ inputs.numero }}
+             MI_NOMBRE: ${{ vars.NOMBRE }}
+           run: echo "El número es $N y mi nombre es $MI_NOMBRE"
+
+
